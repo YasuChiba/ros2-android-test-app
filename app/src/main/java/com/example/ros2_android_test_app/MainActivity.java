@@ -34,6 +34,8 @@ public class MainActivity extends ROSActivity {
     private boolean isWorkingListener;
     private boolean isWorkingTalker;
 
+    WifiManager.MulticastLock lock;
+
     /** Called when the activity is first created. */
     @Override
     public final void onCreate(final Bundle savedInstanceState) {
@@ -53,7 +55,9 @@ public class MainActivity extends ROSActivity {
         }
 
          */
-
+        final WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        lock = wifi.createMulticastLock("ssdp");
+        lock.acquire();
 
         Button listenerStartBtn = (Button)findViewById(R.id.listenerStartBtn);
         listenerStartBtn.setOnClickListener(startListenerListener);
@@ -98,6 +102,7 @@ public class MainActivity extends ROSActivity {
     private OnClickListener startTalkerListener = new OnClickListener() {
         public void onClick(final View view) {
             Log.d(logtag, "onClick() called - start talker button");
+            Log.d(logtag, String.valueOf(lock.isHeld()));
             changeTalkerState(true);
         }
     };
@@ -106,6 +111,7 @@ public class MainActivity extends ROSActivity {
     private OnClickListener stopTalkerListener = new OnClickListener() {
         public void onClick(final View view) {
             Log.d(logtag, "onClick() called - stop talker button");
+            Log.d(logtag, String.valueOf(lock.isHeld()));
             changeTalkerState(false);
         }
     };
@@ -147,6 +153,10 @@ public class MainActivity extends ROSActivity {
         if (outState != null) {
             outState.putBoolean(IS_WROKING_LISTENER, isWorkingListener);
             outState.putBoolean(IS_WORKING_TALKER, isWorkingTalker);
+        }
+        if(lock.isHeld()) {
+            Log.d(logtag, "release lock");
+            lock.release();
         }
         super.onSaveInstanceState(outState);
     }
