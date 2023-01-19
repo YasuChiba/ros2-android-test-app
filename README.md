@@ -1,2 +1,5 @@
 minimal example of ros2-android app.  
-`.so` files and `.jar` files are build by https://github.com/YasuChiba/ros2-android-build .
+
+
+!!!! please buld `.so` files and `.jar` files and fill `app/libs` dir and `app/src/main/jniLibs` dir before you run this app !!!
+https://github.com/YasuChiba/ros2-android-build

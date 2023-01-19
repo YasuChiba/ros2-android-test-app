@@ -7,9 +7,16 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/deploymentTargetDropDown.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+
+
+app/libs/*
+!app/libs/.gitkeep
+app/src/main/jniLibs/arm64-v8a/*
+!app/src/main/jniLibs/arm64-v8a/.gitkeep
